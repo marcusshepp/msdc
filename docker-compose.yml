@@ -1,0 +1,48 @@
+version: "3.9"
+   
+services:
+  nginx: 
+    image: nginx:latest
+    container_name: msdc_nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+      
+  db:
+    image: postgres
+    container_name: msdc_db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  api:
+    build: .
+    container_name: msdc_api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+
+  ui:
+    container_name: msdc_ui
+    build:
+      context: .
+      dockerfile: ./msdc_ui/Dockerfile
+    ports:
+      - 4200:4200
+#     volumes:
+#       - node_modules:/home/node/app/node_modules
+# volumes:
+#   node_modules:
+  

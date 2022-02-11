@@ -1,0 +1,16 @@
+# Stage 1
+
+FROM node:current-alpine as build-step
+
+RUN mkdir -p /msdc_ui
+WORKDIR /msdc_ui
+COPY package.json /msdc_ui
+RUN npm install
+COPY . /msdc_ui
+RUN npm run build
+# RUN npm run start
+
+# Stage 2
+# FROM nginx:1.17.1-alpine
+
+# COPY --from=build-step /app/docs /usr/share/nginx/html
