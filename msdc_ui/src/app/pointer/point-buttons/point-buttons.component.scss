@@ -1,0 +1,17 @@
+.pointing-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    & > span {
+        background-color: rgba(126, 127, 226, 0.459);
+        width: 5rem;
+        height: 4rem;
+        margin: 5px;
+        text-align: center;
+        border-radius: 5%;
+        line-height: 4rem;
+        cursor: pointer;
+    }
+}

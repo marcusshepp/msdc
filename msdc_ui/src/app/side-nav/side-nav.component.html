@@ -1,0 +1,20 @@
+<ul nz-menu nzMode="inline" style="width: 240px;">
+  <!--       [(nzOpen)]="openMap.sub1"
+      (nzOpenChange)="openHandler('sub1')" -->
+    <li
+      nz-submenu
+      nzTitle="Foobar"
+    >
+      <ul>
+        <a nz-menu-item routerLink="/pointing" routerLinkActive="active">
+          Pointer
+        </a>
+        <!-- <li nz-menu-group nzTitle="Item 2">
+          <ul>
+            <li nz-menu-item>Option 3</li>
+            <li nz-menu-item>Option 4</li>
+          </ul>
+        </li> -->
+      </ul>
+    </li>
+  </ul>

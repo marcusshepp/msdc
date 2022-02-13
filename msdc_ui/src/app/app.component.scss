@@ -1,0 +1,35 @@
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 30px 16px 0;
+  float: left;
+}
+
+.nav-icon {
+  padding: 15px;
+}
+
+.nav-icon:hover {
+  background-color: blue;
+}
+
+.header-menu {
+  line-height: 64px;
+}
+
+.sider-menu {
+  height: 100%;
+  border-right: 0;
+}
+
+.inner-layout {
+  height: 100%;
+  padding: 24px 24px 24px 24px;
+}
+
+nz-content {
+  background: #fff;
+  padding: 30px;
+  min-height: 30rem;
+}

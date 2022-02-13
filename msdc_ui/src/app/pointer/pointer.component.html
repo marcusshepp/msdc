@@ -1,0 +1,25 @@
+
+<div class="container">
+  <div class="username-container">
+    <nz-input-group [formGroup]="signInForm">
+      <input 
+      type="text"
+      nz-input 
+      placeholder="Enter your username"
+      class="username-input"
+      [formControl]="username"
+      />
+      <button nz-button nzType="primary" (click)="connect()">Connect</button>
+    </nz-input-group>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  <app-point-buttons (vote)="vote($event)"></app-point-buttons>
+
+  <nz-divider></nz-divider>
+
+  <div class="people-connected-container">
+
+  </div>
+</div>
