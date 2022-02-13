@@ -1,0 +1,1 @@
+docker build --no-cache -t msdc_ui -f Dockerfile .

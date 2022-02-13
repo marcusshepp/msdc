@@ -18,7 +18,7 @@ COPY . .
 
 #  -- --prod
 
-RUN npm run ng build -- --dev --output-path=dist
+RUN npm run ng build -- --prod --output-path=dist
 
 
 ### STAGE 2: Setup ###
