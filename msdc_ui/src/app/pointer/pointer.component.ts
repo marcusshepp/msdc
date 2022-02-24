@@ -1,5 +1,7 @@
+import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { RogerHubService } from "../services/roger-hub/roger-hub.service";
 import { PointerUser } from "./pointer.models";
 
 @Component({
@@ -12,15 +14,34 @@ export class PointerComponent {
   public signInForm: FormGroup = this.fb.group({
     username: this.username,
   });
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private roger: RogerHubService,
+    private http: HttpClient,
+  ) {
+    this.roger.init();
+  }
 
   public connect(): void {
     let user = new PointerUser(this.username.value);
-    console.log(JSON.stringify(user));
+    this.roger.name = user.name;
+  }
+
+  public printVotes(): void {
+    this.roger.printVotes();
   }
 
   public vote(value: number): void {
-    console.log(value);
+    this.roger.currentVote = value;
+    this.roger.vote();
+  }
+
+  public foo() {
+    this.http
+    .get('https://localhost:5001/WeatherForecast')
+    .subscribe((foo) => {
+      console.log(foo);
+    });
   }
 
 }

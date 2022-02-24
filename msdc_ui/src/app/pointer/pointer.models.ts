@@ -9,3 +9,12 @@ export class PointerUser {
 export interface PointerStorage {
     name?: string;
 }
+
+export interface VoteRequest {
+    name?: string;
+    vote?: number;
+}
+
+export interface VoteResponse {
+    votes?: number[];
+}
