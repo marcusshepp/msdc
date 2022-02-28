@@ -1,5 +1,5 @@
 cd /root/msdc/msdc_ui
-docker build --no-cache -t msdc/msdc -f ../msdc_ui/Dockerfile
+docker build --no-cache -t msdc/msdc -f ../Dockerfile .
 docker run -d -p 80:80 msdc
 
 # docker ps 
