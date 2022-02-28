@@ -3,3 +3,6 @@ msdc_ui/node_modules
 msdc_ui/.vscode
 roger\roger\bin
 roger\roger\obj
+roger/roger/bin/*
+roger/roger/obj/* 
+roger/roger/out/* 
