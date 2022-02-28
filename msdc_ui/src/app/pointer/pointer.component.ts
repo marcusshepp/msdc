@@ -14,6 +14,7 @@ export class PointerComponent {
   public signInForm: FormGroup = this.fb.group({
     username: this.username,
   });
+
   constructor(
     private fb: FormBuilder,
     private roger: RogerHubService,
@@ -22,13 +23,21 @@ export class PointerComponent {
     this.roger.init();
   }
 
+  public get isConnected(): boolean {
+    return this.roger.isConnected;
+  }
+
+  public get usersConnected(): string[] | null {
+    if (!!this.roger && this.roger.usersConnected?.length > 0) {
+      return this.roger.usersConnected;
+    }
+    return null;
+  }
+
   public connect(): void {
     let user = new PointerUser(this.username.value);
     this.roger.name = user.name;
-  }
-
-  public printVotes(): void {
-    this.roger.printVotes();
+    this.roger.registerUser();
   }
 
   public vote(value: number): void {

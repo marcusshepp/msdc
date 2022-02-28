@@ -32,6 +32,16 @@ public class VoteResponse
 public class RogerHub : Hub
 {
     private List<int> Votes = new List<int>();
+    private List<string> Users = new List<string>();
+
+    public async Task RegisterUser(string name) 
+    {
+        if (!this.Users.Contains(name)) {
+            this.Users.Add(name);
+        }
+
+        await Clients.All.SendAsync("userRegistered", this.Users);
+    }
 
     public async Task Vote(VoteRequest request)
     {

@@ -1,5 +1,6 @@
 
 <div class="container">
+  <span *ngIf="!isConnected">Enter your name to connect</span>
   <div class="username-container">
     <nz-input-group [formGroup]="signInForm">
       <input 
@@ -11,7 +12,6 @@
       (keyup.enter)="connect()"
       />
       <button nz-button (click)="connect()">Connect</button>
-      <button nz-button (click)="printVotes()">printVotes</button>
     </nz-input-group>
 
     <!-- <button nz-button (click)="foo()">Foo</button> -->
@@ -19,11 +19,16 @@
 
   <nz-divider></nz-divider>
 
-  <app-point-buttons (vote)="vote($event)"></app-point-buttons>
+  <app-point-buttons
+    *ngIf="isConnected"
+    (vote)="vote($event)"></app-point-buttons>
 
   <nz-divider></nz-divider>
 
   <div class="people-connected-container">
-
+    <div class="users-title">Users</div>
+    <div class="person-connected" *ngFor="let p of usersConnected">
+      {{ p }}
+    </div>
   </div>
 </div>

@@ -1,9 +1,15 @@
-<div class="pointing-buttons-container">
-    <span (click)="submit(1)">1</span>
-    <span (click)="submit(2)">2</span>
-    <span (click)="submit(3)">3</span>
-    <span (click)="submit(5)">5</span>
-    <span (click)="submit(8)">8</span>
-    <span (click)="submit(13)">13</span>
-    <span (click)="submit(21)">21</span>
+<div class="outer-container">
+  <div class="vote-buttons-title">
+    Vote
   </div>
+
+  <div class="pointing-buttons-container">
+    <span [ngClass]="currentVote === 1 ? 'selected' : ''" (click)="submit(1)">1</span>
+    <span [ngClass]="currentVote === 2 ? 'selected' : ''" (click)="submit(2)">2</span>
+    <span [ngClass]="currentVote === 3 ? 'selected' : ''" (click)="submit(3)">3</span>
+    <span [ngClass]="currentVote === 5 ? 'selected' : ''" (click)="submit(5)">5</span>
+    <span [ngClass]="currentVote === 8 ? 'selected' : ''" (click)="submit(8)">8</span>
+    <span [ngClass]="currentVote === 13 ? 'selected' : ''" (click)="submit(13)">13</span>
+    <span [ngClass]="currentVote === 21 ? 'selected' : ''" (click)="submit(21)">21</span>
+  </div>
+</div>

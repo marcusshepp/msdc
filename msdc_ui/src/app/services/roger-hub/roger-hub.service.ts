@@ -10,6 +10,7 @@ export class RogerHubService {
   private _hubConnection?: signalR.HubConnection;
   private _name?: string;
   private _currentVote?: number;
+  private _names: string[] = [];
 
   constructor() { }
 
@@ -29,6 +30,14 @@ export class RogerHubService {
     return this._currentVote;
   }
 
+  public get usersConnected(): string[] {
+    return this._names;
+  }
+
+  public get isConnected(): boolean {
+    return !!this._hubConnection && !!this.name && this.name.length > 0;
+  }
+
   private get voteRequest(): VoteRequest {
     return {
       name: this.name,
@@ -41,6 +50,16 @@ export class RogerHubService {
     this.startConnection();
   }
 
+  public registerUser(): void {
+    if (this._hubConnection) {
+      this._hubConnection
+        .send("registerUser", this.name)
+        .then(() => {
+          console.log('registering user', this.name);
+        });
+    }
+  }
+
   public vote(): void {
     if (this._hubConnection) {
       this._hubConnection
@@ -51,25 +70,19 @@ export class RogerHubService {
     }
   }
 
-  public printVotes(): void {
+  private userRegistered(): void {
     if (this._hubConnection) {
       this._hubConnection
-        .invoke("printVotes")
-        .then(() => {
-          console.log('printVotes');
-        });
+        .on("userRegistered", 
+            (name: string) => {
+              if (!this._names?.includes(name)) {
+                this._names = [...this._names, name];
+              }
+              console.log(name, this._names);
+            });
     }
   }
 
-  // private messageReceived(): void {
-  //   if (this._hubConnection) {
-  //     this._hubConnection
-  //       .on("messageReceived", 
-  //           (username: string, message: string) => {
-  //             console.log('msg rec', username, message);
-  //           });
-  //   }
-  // }
   private messageReceived(): void {
     if (this._hubConnection) {
       this._hubConnection
@@ -97,6 +110,7 @@ export class RogerHubService {
         .then(() => {
           console.log('Connection Start');
           this.messageReceived();
+          this.userRegistered();
         })
         .catch(err => console.log('Err', err));
     }

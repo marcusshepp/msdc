@@ -5,7 +5,7 @@
     flex-wrap: wrap;
     margin-top: 2rem;
     & > span {
-        background-color: rgba(126, 127, 226, 0.459);
+        border: 1px solid black;
         width: 5rem;
         height: 4rem;
         margin: 5px;
@@ -14,4 +14,16 @@
         line-height: 4rem;
         cursor: pointer;
     }
+    & > span:hover {
+        background-color: rgb(155, 155, 155);
+    }
+
+}
+
+.vote-buttons-title {
+    font-weight: bold;
+}
+
+.selected {
+    background-color: rgb(155, 155, 155);
 }
