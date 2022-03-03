@@ -1,19 +1,17 @@
 # syntax=docker/dockerfile:1
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /roger
 
-# Copy csproj and build as distinct layers
-COPY roger/  ./
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
 
 # Copy everything else and build
-# COPY ../engine/examples ./
-RUN dotnet build \
-    dotnet publish -c Release -o out
-
-ENTRYPOINT ["dotnet", "roger.dll"]
+COPY . ./
+RUN dotnet publish -c Release -o out
 
 # Build runtime image
-# FROM mcr.microsoft.com/dotnet/aspnet:6.0
-# RUN ls 
-# WORKDIR /roger
-# COPY --from=build-env /roger/roger/out .
-# 
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /roger
+COPY --from=build-env /roger/out .
+ENTRYPOINT ["dotnet", "roger.dll"]

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { RogerHubService } from "src/app/services/roger-hub/roger-hub.service";
 
 @Component({
   selector: 'app-point-buttons',

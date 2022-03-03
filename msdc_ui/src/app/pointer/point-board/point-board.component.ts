@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { RogerHubService } from "src/app/services/roger-hub/roger-hub.service";
 
 @Component({
   selector: 'app-point-board',
@@ -15,7 +14,7 @@ export class PointBoardComponent {
   });
   constructor(
     private fb: FormBuilder,
-    private roger: RogerHubService,
+    // private roger: RogerHubService,
     private http: HttpClient,
   ) {}
 

@@ -13,15 +13,11 @@
       />
       <button nz-button (click)="connect()">Connect</button>
     </nz-input-group>
-
-    <!-- <button nz-button (click)="foo()">Foo</button> -->
   </div>
 
   <nz-divider></nz-divider>
 
-  <app-point-buttons
-    *ngIf="isConnected"
-    (vote)="vote($event)"></app-point-buttons>
+  <app-point-buttons *ngIf="isConnected" (vote)="vote($event)"></app-point-buttons>
 
   <nz-divider></nz-divider>
 

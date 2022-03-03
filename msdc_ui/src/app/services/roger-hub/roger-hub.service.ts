@@ -1,118 +1,67 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import * as signalR from "@microsoft/signalr";
-import { VoteRequest, VoteResponse } from 'src/app/pointer/pointer.models';
+import { Subject } from "rxjs";
+import { BASE_URL } from "../base-url";
 
-@Injectable({
-  providedIn: 'root'
-})
+const HUB_URL = '/roger-hub';
+
 export class RogerHubService {
 
-  private _hubConnection?: signalR.HubConnection;
-  private _name?: string;
-  private _currentVote?: number;
-  private _names: string[] = [];
+    private _connection?: signalR.HubConnection;
 
-  constructor() { }
-
-  public set name(_: string | undefined) {
-    this._name = _;
-  }
-
-  public get name(): string | undefined {
-    return this._name;
-  }
-
-  public set currentVote(_: number | undefined) {
-    this._currentVote = _;
-  }
-
-  public get currentVote(): number | undefined {
-    return this._currentVote;
-  }
-
-  public get usersConnected(): string[] {
-    return this._names;
-  }
-
-  public get isConnected(): boolean {
-    return !!this._hubConnection && !!this.name && this.name.length > 0;
-  }
-
-  private get voteRequest(): VoteRequest {
-    return {
-      name: this.name,
-      vote: this.currentVote,
-    };
-  }
-
-  public init() {
-    this.buildConnection();
-    this.startConnection();
-  }
-
-  public registerUser(): void {
-    if (this._hubConnection) {
-      this._hubConnection
-        .send("registerUser", this.name)
-        .then(() => {
-          console.log('registering user', this.name);
-        });
+    // create a few observables to interact with the connection api
+    public isConnected$: Subject<boolean> = new Subject<boolean>();
+    
+    public get connection(): signalR.HubConnection | undefined {
+        return this._connection;
     }
-  }
 
-  public vote(): void {
-    if (this._hubConnection) {
-      this._hubConnection
-        .send("vote", this.voteRequest)
-        .then(() => {
-          console.log('message sent', this.voteRequest);
-        });
+    public constructor() {
+        this.buildConnection();
+        this.startConnection();
+        
+        this.onConnectionClose();
+        this.onConnectionReconnected();
     }
-  }
 
-  private userRegistered(): void {
-    if (this._hubConnection) {
-      this._hubConnection
-        .on("userRegistered", 
-            (name: string) => {
-              if (!this._names?.includes(name)) {
-                this._names = [...this._names, name];
-              }
-              console.log(name, this._names);
-            });
+    private buildConnection(): void {
+        this._connection = new signalR.HubConnectionBuilder()
+            .withUrl(`${BASE_URL}/${HUB_URL}`, {
+                skipNegotiation: true,
+                transport: signalR.HttpTransportType.WebSockets
+            })
+            .configureLogging(signalR.LogLevel.Debug)
+            .build();
     }
-  }
 
-  private messageReceived(): void {
-    if (this._hubConnection) {
-      this._hubConnection
-        .on("messageReceived", 
-            (response: VoteResponse) => {
-              console.log('msg rec', response);
-            });
+    private startConnection(): void {
+        if (this._connection) {
+            this._connection
+                .start()
+                .then(() => {
+                    console.log('Connection Start');
+                    this.isConnected$.next(true);
+                })
+                .catch(err => console.log('Err', err));
+        }
     }
-  }
 
-  private buildConnection() {
-    this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:5001/roger-hub', {
-        skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets
-      })
-      .configureLogging(signalR.LogLevel.Debug)
-      .build();
-  }
-
-  private startConnection() {
-    if (this._hubConnection) {
-      this._hubConnection
-        .start()
-        .then(() => {
-          console.log('Connection Start');
-          this.messageReceived();
-          this.userRegistered();
-        })
-        .catch(err => console.log('Err', err));
+    private onConnectionClose(): void {
+        if (this._connection) {
+            this._connection
+                .onclose((err?: Error): void => {
+                    console.log('closed', err);
+                    this.isConnected$.complete();
+                });
+        }
     }
-  }
+
+    private onConnectionReconnected(): void {
+        if (this._connection) {
+            this._connection
+                .onreconnected((connectionId?: string): void => {
+                    console.log('closed', connectionId);
+                });
+        }
+    }
 }
