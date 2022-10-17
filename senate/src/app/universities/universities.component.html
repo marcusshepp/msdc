@@ -1,0 +1,29 @@
+<div class="uni-container">
+    <div class="display">
+        <app-search 
+            (search)="receiveSearchInput($event)" 
+            (countrySelectedAction)="countrySelectedAction($event)" 
+            [countries]="countriesAvailableForSelect"
+            (clearSearchAndFiltersAction)="clearSearchAndFilters()"
+            (onlyCustomAction)="onlyCustomAction($event)"
+        ></app-search>
+        <div class="accordian">
+            <ng-container *ngFor="let uni of indexedUniversities">
+                <mat-accordion>
+                    <app-university [uni]="uni"></app-university>
+                </mat-accordion>
+            </ng-container>
+        </div>
+        <mat-paginator 
+            [length]="universitiesBeingDisplayed.length"
+            aria-label="Select page"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="changePage($event)"
+            class="paginator"
+            >
+        </mat-paginator>
+    </div>
+    <div class="creation">
+        <app-university-create></app-university-create>
+    </div>
+</div>

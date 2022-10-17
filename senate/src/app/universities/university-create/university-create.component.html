@@ -1,0 +1,71 @@
+<ng-container *ngIf="form">
+    <mat-card>
+        <div class="title">
+            Create a University
+        </div>
+        <div class="uni-create-form-container" [formGroup]="form">
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput [formControl]="name">
+                <mat-error *ngIf="name?.errors?.['required']">Name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Country</mat-label>
+                <input matInput [formControl]="country">
+                <mat-error *ngIf="country?.errors?.['required']">Country is required</mat-error>
+                <mat-error *ngIf="country?.errors?.['maxlength']">Country can only be up to thirty characters</mat-error>
+                <mat-error *ngIf="country?.errors?.['minlength']">Country must be more than three characters</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Alpha Code</mat-label>
+                <input matInput [formControl]="alphaTwoCode">
+                <mat-error *ngIf="alphaTwoCode?.errors?.['maxlength'] || alphaTwoCode?.errors?.['minlength']">Alpha Code can only be two characters</mat-error>
+            </mat-form-field>
+            <div class="domains">
+                <div class="form-array-header">
+                    <div class="form-array-title">Domains</div>
+                    <mat-icon class="add-btn" (click)="addDomain()" matTooltip="Add a Domain"  color="primary">
+                        add_circle
+                    </mat-icon>
+                </div>
+                <ng-container formArrayName="domains" *ngIf="domains.length > 0">
+                    <ng-container *ngFor="let domain of domains.controls; let i = index">
+                        <div class="domain-form-row" [formGroupName]="i">
+                            <mat-form-field appearance="fill">
+                                <input matInput formControlName="name" placeholder="Domain Name">
+                            </mat-form-field>
+                            <mat-icon class="delete-btn" (click)="removeDomain(i)" matTooltip="Remove Domain" color="warn">
+                                delete
+                            </mat-icon>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="webpages">
+                <div class="form-array-header">
+                    <div class="form-array-title">Websites</div>
+                    <mat-icon class="add-btn" (click)="addwebPage()" matTooltip="Add a Website" color="primary">
+                        add_circle
+                    </mat-icon>
+                </div>
+                <ng-container formArrayName="webPages" *ngIf="webPages.length > 0">
+                    <ng-container *ngFor="let page of webPagesFormArray.controls; let i = index">
+                        <div class="webpage-form-row" [formGroupName]="i">
+                            <mat-form-field appearance="fill">
+                                <input matInput formControlName="link" placeholder="Website">
+                            </mat-form-field>
+                            <mat-icon class="delete-btn" (click)="removeWebPage(i)" matTooltip="Remove Website" color="warn">
+                                delete
+                            </mat-icon>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="buttons">
+            <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">
+                Save
+            </button>
+        </div>
+    </mat-card>
+</ng-container>

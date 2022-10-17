@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-form-field appearance="fill">
+        <mat-label>Seach for a University</mat-label>
+        <input matInput [formControl]="searchTerm">
+        <mat-error *ngIf="searchTerm?.errors?.['minlength']">
+            Search must be greater than three characters to avoid too many results.
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Country</mat-label>
+        <mat-select [formControl]="countrySelected" multiple>
+          <mat-option *ngFor="let country of countries" [value]="country">
+            {{ country }}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class="buttons">
+        <mat-checkbox [formControl]="onlyCustom">Show Only Custom</mat-checkbox>
+        <button mat-button color="primary" (click)="clear()">Clear</button>
+    </div>
+</mat-card>

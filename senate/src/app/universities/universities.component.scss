@@ -1,0 +1,20 @@
+.uni-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.display {
+    margin: 10px;
+}
+
+// prevents the page from jumping around when rapidly
+// spamming paginator
+.paginator, .accordian {
+    min-width: 455px;
+    max-width: 455px;
+}
+
+.creation {
+    margin-top: 10px;
+}

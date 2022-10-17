@@ -34,11 +34,18 @@ services:
     depends_on:
       - db
 
-  ui:
-    container_name: msdc_ui
+  # ui:
+  #   container_name: msdc_ui
+  #   build:
+  #     context: .
+  #     dockerfile: ./msdc_ui/Dockerfile
+  #   ports:
+  #     - 4200:4200
+  senate:
+    container_name: senate_ui
     build:
       context: .
-      dockerfile: ./msdc_ui/Dockerfile
+      dockerfile: ./senate/Dockerfile
     ports:
       - 4200:4200
 #     volumes:

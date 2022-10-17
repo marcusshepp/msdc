@@ -1,0 +1,45 @@
+<mat-expansion-panel hideToggle *ngIf="uni" class="accordian">
+    <mat-expansion-panel-header class="header">
+      <mat-panel-title class="name">
+        {{ uni.name }}
+      </mat-panel-title>
+      <mat-panel-description>
+        <div class="description">{{ uni.country }}</div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="panel-content">
+        <div class="flex-row">
+            <div class="alphacode">
+                <div class="title">
+                    Abbreviation:
+                </div>
+                {{ uni.alphaTwoCode }}
+            </div>
+            <div>
+                <!-- <mat-icon>school</mat-icon> -->
+                <img src="../../../assets/school.jpeg" 
+alt="Placeholder Photo" class="photo" />
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="domains">
+                <div class="title">
+                    Domain:
+                </div>
+                <div class="row" *ngFor="let domain of uni.domains">
+                    <a [href]="getLink(domain)">{{ domain }}</a>
+                </div>
+            </div>
+            <div class="webpages">
+                <div class="title">
+                    Web Page:
+                </div>
+                <div class="row" *ngFor="let webPage of uni.webPages">
+                    {{ webPage }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</mat-expansion-panel>
+

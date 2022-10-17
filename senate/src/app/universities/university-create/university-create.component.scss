@@ -1,0 +1,32 @@
+mat-form-field, .title {
+    margin: 10px;
+    width: 382px
+}
+
+.form-array-header {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 12px;
+    & > mat-icon {
+        line-height: .8;
+        margin-left: 15px;
+    }
+}
+
+mat-icon {
+    cursor: pointer;
+}
+
+.form-array-title, .title {
+    font-size: larger;
+}
+
+.uni-create-form-container {
+    width: 426px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}

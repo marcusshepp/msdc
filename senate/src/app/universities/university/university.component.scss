@@ -1,0 +1,36 @@
+.description {
+    width: 100%;
+    text-align: right;
+}
+
+.accordian {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 15px;
+    text-overflow: ellipsis;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    & > div {
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+}
+
+.photo {
+    width: 100px;
+    max-height: 100px;
+}
